@@ -1,0 +1,157 @@
+﻿<Window x:Class="DrugAccounting.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DrugAccounting"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        Name="Win_MainWindow" Title="DrugAccounting"
+        MaxHeight="{Binding SystemParameters.WorkArea.Height}"
+        Height="450" Width="800" WindowState="Normal" WindowStyle="None" WindowStartupLocation="CenterScreen"
+        Background="#DADAE6">
+    <Grid x:Name="Grid_mainWindow" Margin="10 5" Background="#DADAE6"
+          MouseDown="WholeWindow_MouseDown">
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="44" MaxHeight="40" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--TopLine-->
+        <Border Name="Border_Menu" Grid.Row="0" Margin="2" Background="WhiteSmoke" CornerRadius="6">
+            <DockPanel>
+                <!--MENU-->
+                <StackPanel Margin="5" VerticalAlignment="Center">
+                    <Menu Background="WhiteSmoke" Cursor="Hand">
+                        <MenuItem Header="Файл">
+                            <MenuItem Header="Новый пациент" x:Name="NewPatient_Item"
+                                      Click="MenuItems_click" Cursor="Hand" HorizontalContentAlignment="Left" />
+                            <Separator />
+
+                            <MenuItem Header="Выход" x:Name="Exit_Item"
+                                      Click="MenuItems_click" Cursor="Hand" HorizontalContentAlignment="Left" />
+                        </MenuItem>
+
+                        <MenuItem Header="Таблица">
+                            <MenuItem Header="Обновить таблицу" x:Name="Refresh_Item"
+                                      Click="MenuItems_click" Cursor="Hand" HorizontalContentAlignment="Left" />
+                            <MenuItem Header="Очистить все данные" Name="Del_theTable_Item"
+                                      Click="MenuItems_click" Cursor="Hand" HorizontalContentAlignment="Left" />
+                        </MenuItem>
+
+                    </Menu>
+                </StackPanel>
+                <!--SistemButtons-->
+                <Border HorizontalAlignment="Right" MinWidth="120">
+                    <Grid MinHeight="40" MaxHeight="40">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <!--Кнопка сворачивания-->
+                        <Grid x:Name="Grid_RollUp" Grid.Column="0" Margin="5" ClipToBounds="True" Cursor="Hand"
+                              MouseEnter="SystemBut_Enter" MouseLeave="SystemBut_Leave"
+                              MouseLeftButtonDown="SystemBut_MouseDown" MouseLeftButtonUp="SystemBut_MouseUp">
+                            <Border x:Name="Br_RollUp" BorderThickness="1" CornerRadius="6"
+                                    BorderBrush="Black" Cursor="Hand" Padding="5">
+                                <Border.Background>
+                                    <ImageBrush x:Name="Img_RollUp" ImageSource="/Rollup_img.png" Stretch="Uniform" />
+                                </Border.Background>
+                            </Border>
+                        </Grid>
+                        <!--Кнопка расширения/сужения-->
+                        <Grid x:Name="Grid_Expand" Grid.Column="1" Margin="5" Cursor="Hand"
+                              MouseEnter="SystemBut_Enter" MouseLeave="SystemBut_Leave"
+                              MouseLeftButtonDown="SystemBut_MouseDown" MouseLeftButtonUp="SystemBut_MouseUp">
+                            <Border x:Name="Br_Expand" BorderThickness="1" CornerRadius="6"
+                                    BorderBrush="Black" Cursor="Hand">
+                                <Border.Background>
+                                    <ImageBrush x:Name="Img_Expand" ImageSource="/Expand_img.png" Stretch="Uniform" />
+                                </Border.Background>
+                            </Border>
+                        </Grid>
+                        <!--Кпопка закрытия-->
+                        <Grid x:Name="Grid_Exit" Grid.Column="2" Margin="5" Cursor="Hand"
+                              MouseEnter="SystemBut_Enter" MouseLeave="SystemBut_Leave"
+                              MouseLeftButtonDown="SystemBut_MouseDown" MouseLeftButtonUp="SystemBut_MouseUp">
+                            <Border x:Name="Br_Exit" BorderThickness="1" CornerRadius="6"
+                                    BorderBrush="Black" Cursor="Hand">
+                                <Border.Background>
+                                    <ImageBrush x:Name="Img_Exit" ImageSource="/Exit_img.png" Stretch="Uniform" />
+                                </Border.Background>
+                            </Border>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </DockPanel>
+        </Border>
+
+
+        <!--Body-->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <!--Center-->
+            <DataGrid x:Name="DG_AllPatients" Grid.Row="0" VerticalAlignment="Stretch" Margin="0,20,0,20"
+                      IsReadOnly="True"
+                      AlternatingRowBackground="#DADAE6" CanUserAddRows="False" AutoGenerateColumns="False"
+                      ItemsSource="{Binding Path=patientsList, UpdateSourceTrigger=PropertyChanged}">
+                <!--Стиль колонок-->
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        <Setter Property="Background" Value="WhiteSmoke" />
+                        <Setter Property="BorderThickness" Value="0,0,1,2" />
+                        <Setter Property="BorderBrush" Value="#BDBDCB" />
+                    </Style>
+                </DataGrid.Resources>
+                <!--Стиль контента ячеек-->
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="20, 3, 0, 3" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                    <Border Padding="{TemplateBinding Padding}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            Background="{TemplateBinding Background}"
+                                            SnapsToDevicePixels="True">
+                                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </DataGrid.CellStyle>
+                <!--Двойной клик по элементу-->
+                <DataGrid.ItemContainerStyle>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="DataGrid_Row_DoubleClick" />
+                    </Style>
+                </DataGrid.ItemContainerStyle>
+                <!--Названия колонок и привязка данных-->
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер" Width="1*" FontSize="16"
+                                        Binding="{Binding Path=P_numOf_patient}" />
+                    <DataGridTextColumn Header="ФИО" Width="1*" FontSize="16"
+                                        Binding="{Binding Path=P_fullName_patient}" />
+                    <DataGridTextColumn Header="Центр" Width="1*" FontSize="16" Binding="{Binding Path=P_numOf_center}" />
+                    <DataGridTextColumn Header="Таблетки" Width="1*" FontSize="16"
+                                        Binding="{Binding Path=P_typeOf_drug}" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <!--Bottom-->
+            <StackPanel Grid.Row="2">
+                <Button x:Name="addPatient" HorizontalAlignment="Left"
+                        Content="Новый пациент" Cursor="Hand"
+                        Click="addPatient_Click" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

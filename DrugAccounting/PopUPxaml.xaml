@@ -1,0 +1,28 @@
+﻿<Window x:Class="DrugAccounting.PopUPxaml"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DrugAccounting"
+        mc:Ignorable="d"
+        Title="PopUPxaml" Height="450" Width="800">
+    <Grid>
+        <Border Height="200" Width="200" Background="Wheat" BorderThickness="2" BorderBrush="Black">
+            <Grid x:Name="Grid_PopUp_Inf">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
