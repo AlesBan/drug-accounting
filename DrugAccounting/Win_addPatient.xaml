@@ -1,0 +1,694 @@
+﻿<Window x:Class="DrugAccounting.Win_addPatient"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DrugAccounting"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Name="Win_AddPatient"
+        MaxHeight="{Binding SystemParameters.WorkArea.Height}"
+        MinHeight="620" MinWidth="1200" ResizeMode="NoResize" Background="Transparent"
+        WindowStyle="None" WindowStartupLocation="CenterScreen" AllowsTransparency="False"
+        MouseDown="WholeWindow_MouseDown">
+
+    <Grid x:Name="Grid_addPatient" Background="#64BEFF" SnapsToDevicePixels="True" MouseDown="WholeWindow_MouseDown">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="138*"/>
+            <RowDefinition Height="137*"/>
+            <RowDefinition Height="473*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel MinHeight="120">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Border Margin="10 5 5 5" Background="#E8F3FB" CornerRadius="6" Grid.Column="0">
+                    <Grid Margin="5" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <DockPanel Grid.Row="0" VerticalAlignment="Center">
+                            <TextBlock Text="ФИО пациента:" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"  Grid.Column="0" />
+                            <TextBox x:Name="fullName_patient" HorizontalAlignment="Right" 
+                                 FontSize="20" Background="#FBFBFB" TextAlignment="Center" MaxLength="3"  materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
+                                 MinWidth="100" MaxWidth="100" TextWrapping="NoWrap" Cursor="IBeam"  Grid.Column="1" TextChanged="Initials_patient_Changed"/>
+                        </DockPanel>
+                        
+                        <DockPanel  Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
+                            <TextBlock Text="Номер пациента:" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="numOf_patient" HorizontalAlignment="Right" 
+                                 FontSize="20" Background="#FBFBFB" TextAlignment="Center" MaxLength="3" materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
+                                 MinWidth="100" MaxWidth="100" TextWrapping="NoWrap" Cursor="IBeam" TextChanged="Num_field_Changed" />
+                        </DockPanel>
+                        
+                        <DockPanel  Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">
+                            <TextBlock Text="Номер центра:" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox x:Name="numOf_center" HorizontalAlignment="Right" 
+                                 FontSize="20" Background="#FBFBFB" TextAlignment="Center" MaxLength="3"  materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
+                                 MinWidth="100" MaxWidth="100" TextWrapping="NoWrap" Cursor="IBeam" TextChanged="Num_field_Changed"/>
+                        </DockPanel>
+                        
+                        <DockPanel Margin="20 0" Grid.Column="2" Grid.Row="1">
+                            <TextBlock Text="Препарат:" FontSize="21"/>
+                            <RadioButton x:Name="Kasark" GroupName="Typeof_Drug" Content="Касарк" Cursor="Hand"
+                                         FontSize="20"  Margin="30 0 0 0" DockPanel.Dock="Left" Checked="ChoiseOf_Drug_Changed"/>
+
+                            <RadioButton x:Name="Atakand" GroupName="Typeof_Drug" Content="Атаканд" Cursor="Hand"
+                                         HorizontalAlignment="Left" FontSize="20" Margin="30 0 0 0" Checked="ChoiseOf_Drug_Changed"/>
+                        </DockPanel>
+                    </Grid>
+                </Border>
+
+                <Border Margin="5 5 10 5" Background="#E8F3FB" CornerRadius="6" Grid.Column="1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition  MaxWidth="40"/>
+                            <ColumnDefinition  MaxWidth="40"/>
+                            <ColumnDefinition MaxWidth="40"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition MinHeight="40" MaxHeight="40" Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        
+                        <Border BorderBrush="#7499B9" BorderThickness="1" CornerRadius="6" Background="#CBDEEF" Margin="5"
+                            Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center" >
+                            <Button x:Name="Bt_backToMainWin" Content="Главное меню" Cursor="Hand" FontSize="18" VerticalAlignment="Center"  Style="{StaticResource MaterialDesignFlatButton}" Click="Bt_MainMenuPatient_Click"/>
+                        </Border>
+                        <Border BorderBrush="#7499B9" BorderThickness="1" CornerRadius="6" Background="#CBDEEF" Margin="5" 
+                            Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center">
+                            <Button x:Name="Bt_savePatient" Content="Сохранить" Cursor="Hand" FontSize="18" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFlatButton}" Click="Bt_savePatient_Click"/>
+                        </Border>
+
+                        <Grid x:Name="Grid_RollUp" Grid.Column="1" Margin="5" ClipToBounds="True" Cursor="Hand"
+                              MouseEnter="SistemBut_Enter" MouseLeave="SistemBut_Leave" 
+                              MouseLeftButtonDown="SistemBut_MouseDown" MouseLeftButtonUp="SistemBut_MouseUp">
+                            <Border x:Name="Br_RollUp" BorderThickness="1" CornerRadius="6" 
+                                    BorderBrush="Black" Cursor="Hand" Padding="5">
+                                <Border.Background>
+                                    <ImageBrush x:Name="Img_RollUp" ImageSource="/Rollup_img.png" Stretch="Uniform"/>
+                                </Border.Background>
+                            </Border>
+                        </Grid>
+
+                        <Grid x:Name="Grid_Expand" Grid.Column="2" Margin="5" Cursor="Hand"
+                              MouseEnter="SistemBut_Enter" MouseLeave="SistemBut_Leave" 
+                              MouseLeftButtonDown="SistemBut_MouseDown" MouseLeftButtonUp="SistemBut_MouseUp">
+                            <Border x:Name="Br_Expand" BorderThickness="1" CornerRadius="6" 
+                                    BorderBrush="Black" Cursor="Hand">
+                                <Border.Background>
+                                    <ImageBrush x:Name="Img_Expand" ImageSource="/Expand_img.png" Stretch="Uniform"/>
+                                </Border.Background>
+                            </Border>
+                        </Grid>
+
+                        <Grid x:Name="Grid_Exit" Grid.Column="3" Margin="5" Cursor="Hand" 
+                              MouseEnter="SistemBut_Enter" MouseLeave="SistemBut_Leave" 
+                              MouseLeftButtonDown="SistemBut_MouseDown" MouseLeftButtonUp="SistemBut_MouseUp">
+                            <Border x:Name="Br_Exit" BorderThickness="1" CornerRadius="6"
+                                    BorderBrush="Black" Cursor="Hand">
+                                <Border.Background>
+                                    <ImageBrush x:Name="Img_Exit" ImageSource="/Exit_img.png" Stretch="Uniform"/>
+                                </Border.Background>
+                            </Border>
+                        </Grid>
+
+                    </Grid>
+                </Border>
+            </Grid>
+        </DockPanel>
+
+
+        <Border Margin="10,5,10,10" Background="#E8F3FB" CornerRadius="6 6 0 0" Padding="20" Grid.Row="1" Grid.RowSpan="2">
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" Style="{StaticResource MaterialDesignScrollViewer}">
+                <Grid Name="Grid_Visits">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Padding="5 0 0 0" BorderBrush="#ACDBE0" BorderThickness="2 2 1 2" Grid.Column="0" >
+                        <StackPanel >
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                <TextBlock Text="Визит 1" FontSize="21" FontWeight="Bold"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="0 0 20 5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Дата визита:" FontSize="18" HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center"/>
+                                    <Border Grid.Column="1" BorderThickness="1 1 1 0">
+                                        <DatePicker Name="dateOf_visit1"  FontSize="18" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" 
+                                                    BorderThickness="0"  MinWidth="140" MaxWidth="140" HorizontalAlignment="Right"
+                                                    SelectedDateChanged="Date_field_Changed" />
+
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+                            
+                            <DockPanel Margin="0 3">
+                                <TextBlock Text="Кол-во выданных таб.:" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <TextBox x:Name="numOf_issuedPills_visit1" HorizontalAlignment="Right" Margin="0 0 20 0"
+                                 FontSize="18" Background="#FBFBFB" MaxLength="3" materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
+                                 MinWidth="50" TextWrapping="NoWrap" Text="" TextChanged="Num_field_Changed"
+                                 TextAlignment="Center" Cursor="IBeam" materialDesign:TextFieldAssist.DecorationVisibility="Hidden"/>
+                            </DockPanel>
+
+                            <StackPanel Margin="0 0 20 0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Доза (мг):" FontSize="18" />
+                                    <DockPanel Grid.Column="1" >
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <RadioButton x:Name="massDrug_8_visit1" GroupName="mass_Drug_visit1" Grid.Column="0" HorizontalAlignment="Center"
+                                                    Content="8" FontSize="16" Checked="RadioButMassDrugs_Changed" Cursor="Hand"/>
+                                            <RadioButton x:Name="massDrug_16_visit1" GroupName="mass_Drug_visit1" Grid.Column="1" HorizontalAlignment="Center"
+                                                    Content="16" FontSize="16" Checked="RadioButMassDrugs_Changed" Cursor="Hand"/>
+                                            <RadioButton x:Name="massDrug_32_visit1" GroupName="mass_Drug_visit1" Grid.Column="2" HorizontalAlignment="Center"
+                                                     Content="32" FontSize="16" Checked="RadioButMassDrugs_Changed" Cursor="Hand"/>
+                                        </Grid>
+                                    </DockPanel>
+                                </Grid>
+                            </StackPanel>
+
+                            <DockPanel Margin="0 3 20 3"  VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Номер серии:" FontSize="18" HorizontalAlignment="Left"/>
+                                    <ComboBox x:Name="serial_number_visit1" HorizontalContentAlignment="Right"
+                                              Grid.Column="1" FontSize="18" Background="#FBFBFB"/>
+                                </Grid>
+                            </DockPanel>
+
+                            <StackPanel Margin="0 0 20 0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Срок годности:" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
+                                    <DatePicker Name="dateOf_shelfLife_visit1" FontSize="18" Grid.Row="0" Grid.Column="1"  VerticalAlignment="Center"
+                                                 MinWidth="140" MaxWidth="140" HorizontalAlignment="Right" SelectedDateChanged="Date_field_Changed"/>
+                                </Grid>
+                            </StackPanel>
+
+                            <StackPanel Margin="0 3 20 3">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="Дата и время начала приема:" FontSize="18" HorizontalAlignment="Left" MinWidth="150" MaxWidth="150"
+                                               Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                    <DatePicker Name="dateOf_startTakingPills_visit1"  FontSize="18" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Right"
+                                                SelectedDateChanged="Date_field_Changed" MinWidth="140" MaxWidth="140"/>
+                                    <materialDesign:TimePicker Name="timeOf_startTakingPills_visit1"  FontSize="18" Grid.Column="1" Grid.Row="1" Is24Hours="True"
+                                                                MinWidth="140" MaxWidth="140" HorizontalAlignment="Right" SelectedTimeChanged="Time_field_Changed"/>
+                                </Grid>
+                            </StackPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Частота приема (в день):" FontSize="18" 
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <Border HorizontalAlignment="Right" BorderThickness="0.7" CornerRadius="1" Background="#FBFBFB">
+                                    <TextBlock FontSize="18"  Text="1"
+                                                MinWidth="45" TextWrapping="NoWrap"
+                                                TextAlignment="Center"/>
+                                </Border>
+                            </DockPanel>
+
+                            <StackPanel Margin="0 0 20 5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Последний прием :" FontSize="18" HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center"/>
+                                    <Border Grid.Column="1" BorderThickness="1 1 1 0">
+                                        <materialDesign:TimePicker Name="timeOf_endTakingPills_visit1"  FontSize="18" Grid.Column="1" Grid.Row="1" Is24Hours="True"
+                                                                MinWidth="140" MaxWidth="140" HorizontalAlignment="Right" SelectedTimeChanged="Time_field_Changed"/>
+
+
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+
+                            <DockPanel Margin="0 3 20 3"  VerticalAlignment="Center">
+                                <TextBlock Text="Кол-во принятых таблеток:" FontSize="16" HorizontalAlignment="Left"/>
+                                <Border HorizontalAlignment="Right" CornerRadius="1" Background="#FBFBFB">
+                                    <TextBlock x:Name="numOf_acceptedPills_visit1" 
+                                                FontSize="18"  Text="0"
+                                                MinWidth="45" TextWrapping="NoWrap"
+                                                TextAlignment="Center" />
+                                </Border>
+                            </DockPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Кол-во пустых блистеров:" FontSize="16" HorizontalAlignment="Left"/>
+                                <Border HorizontalAlignment="Right" CornerRadius="1" Background="#FBFBFB">
+                                    <TextBlock x:Name="numOf_blankBlister_visit1" 
+                                                FontSize="18"  Text="0"
+                                                MinWidth="45" TextWrapping="NoWrap"
+                                                TextAlignment="Center"/>
+                                </Border>
+                            </DockPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Кол-во оставшихся таблеток:" FontSize="16" HorizontalAlignment="Left"/>
+                                <Border HorizontalAlignment="Right" CornerRadius="1" Background="#FBFBFB">
+                                    <TextBlock x:Name="numOf_balancePills_visit1" 
+                                                FontSize="18"  Text="0"
+                                                MinWidth="45" TextWrapping="NoWrap"
+                                                TextAlignment="Center"/>
+                                </Border>
+                            </DockPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Padding="5 0 0 0" BorderBrush="#ACDBE0" BorderThickness="1 2 1 2" Grid.Column="1" >
+                        <StackPanel >
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                <TextBlock Text="Визит 2" FontSize="21" FontWeight="Bold"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="0 0 20 5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="Дата и время визита:" FontSize="18" HorizontalAlignment="Left" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Center" />
+                                    
+                                    <DatePicker Name="dateOf_visit2"  FontSize="18" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Right"
+                                                SelectedDateChanged="Date_field_Changed" MinWidth="140" MaxWidth="140"/>
+                                    <materialDesign:TimePicker Name="timeOf_visit2"  FontSize="18" Grid.Column="1" Grid.Row="1" Is24Hours="True"
+                                                                MinWidth="140" MaxWidth="140" HorizontalAlignment="Right" SelectedTimeChanged="Time_field_Changed"/>
+
+                                </Grid>
+                            </StackPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Кол-во выданных таб.:" FontSize="18" HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+                                
+                                <TextBox x:Name="numOf_issuedPills_visit2" HorizontalAlignment="Right" 
+                                    FontSize="18" Background="#FBFBFB"  MaxLength="3" materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
+                                    MinWidth="45" TextWrapping="NoWrap" Text="" TextChanged="Num_field_Changed"
+                                    TextAlignment="Center"/>
+                            </DockPanel>
+
+                            <StackPanel Margin="0 0 20 0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="Доза (мг):" FontSize="18" />
+                                    
+                                    <DockPanel Grid.Column="1" >
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <RadioButton x:Name="massDrug_8_visit2" GroupName="mass_Drug_visit2" Grid.Column="0" HorizontalAlignment="Center"
+                                                    Content="8" FontSize="16" Checked="RadioButMassDrugs_Changed" Cursor="Hand"/>
+                                            
+                                            <RadioButton x:Name="massDrug_16_visit2" GroupName="mass_Drug_visit2" Grid.Column="1" HorizontalAlignment="Center"
+                                                    Content="16" FontSize="16" Checked="RadioButMassDrugs_Changed" Cursor="Hand"/>
+                                            
+                                            <RadioButton x:Name="massDrug_32_visit2" GroupName="mass_Drug_visit2" Grid.Column="2" HorizontalAlignment="Center"
+                                                     Content="32" FontSize="16" Checked="RadioButMassDrugs_Changed" Cursor="Hand"/>
+                                        </Grid>
+                                    </DockPanel>
+                                </Grid>
+                            </StackPanel>
+
+
+                            <DockPanel Margin="0 3 20 3"  VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="Номер серии:" FontSize="18" HorizontalAlignment="Left"/>
+
+                                    <ComboBox x:Name="serial_number_visit2" HorizontalContentAlignment="Right"
+                                              Grid.Column="1" FontSize="18" Background="#FBFBFB"/>
+                                </Grid>
+                            </DockPanel>
+
+                            <StackPanel Margin="0 0 20 0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="Срок годности:" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
+                                    
+                                    <DatePicker Name="dateOf_shelfLife_visit2" FontSize="18" Grid.Row="0" Grid.Column="1"  VerticalAlignment="Center"
+                                                 MinWidth="140" MaxWidth="140" HorizontalAlignment="Right" SelectedDateChanged="Date_field_Changed"/>
+                                </Grid>
+                            </StackPanel>
+
+                            <StackPanel Margin="0 3 20 3">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="32.94"/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="Дата и время начала приема:" FontSize="18" HorizontalAlignment="Left" MinWidth="150" MaxWidth="150"
+                                               Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                    
+                                    <DatePicker Name="dateOf_startTakingPills_visit2"  FontSize="18" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Right"
+                                                SelectedDateChanged="Date_field_Changed" MinWidth="140" MaxWidth="140"/>
+                                    
+                                    <materialDesign:TimePicker Name="timeOf_startTakingPills_visit2"  FontSize="18" Grid.Column="1" Grid.Row="1" Is24Hours="True"
+                                                                MinWidth="140" MaxWidth="140" HorizontalAlignment="Right" SelectedTimeChanged="Time_field_Changed"/>
+
+                                </Grid>
+                            </StackPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Частота приема (в день):" FontSize="18" 
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                
+                                <Border HorizontalAlignment="Right"  CornerRadius="1" Background="#FBFBFB">
+                                    <TextBlock FontSize="18"  Text="1" TextAlignment="Center"
+                                                MinWidth="45" TextWrapping="NoWrap"/>
+                                </Border>
+                            </DockPanel>
+
+                            <StackPanel Margin="0 0 20 5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Последний прием :" FontSize="18" HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center"/>
+                                    <Border Grid.Column="1" BorderThickness="1 1 1 0">
+                                        <materialDesign:TimePicker Name="timeOf_endTakingPills_visit2"  FontSize="18" Grid.Column="1" Grid.Row="1" Is24Hours="True"
+                                                                MinWidth="140" MaxWidth="140" HorizontalAlignment="Right" SelectedTimeChanged="Time_field_Changed"/>
+
+
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Кол-во принятых таблеток:" FontSize="16" HorizontalAlignment="Left"/>
+                                
+                                <Border HorizontalAlignment="Right" CornerRadius="1" Background="#FBFBFB">
+                                    <TextBlock x:Name="numOf_acceptedPills_visit2" 
+                                                FontSize="18"  Text="0"
+                                                MinWidth="45" TextWrapping="NoWrap"
+                                                TextAlignment="Center"/>
+                                </Border>
+                            </DockPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Кол-во пустых блистеров:" FontSize="16" HorizontalAlignment="Left"/>
+                                
+                                <Border HorizontalAlignment="Right" CornerRadius="1" Background="#FBFBFB">
+                                    <TextBlock x:Name="numOf_blankBlister_visit2" 
+                                                FontSize="18"  Text="0"
+                                                MinWidth="45" TextWrapping="NoWrap"
+                                                TextAlignment="Center"/>
+                                </Border>
+                            </DockPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Кол-во оставшихся таблеток:" FontSize="16" HorizontalAlignment="Left"/>
+                                
+                                <Border HorizontalAlignment="Right" CornerRadius="1" Background="#FBFBFB">
+                                    <TextBlock x:Name="numOf_balancePills_visit2" 
+                                                FontSize="18"  Text="0"
+                                                MinWidth="45" TextWrapping="NoWrap"
+                                                TextAlignment="Center"/>
+                                </Border>
+                            </DockPanel>
+                        </StackPanel>
+                    </Border>
+
+
+                    <Border Padding="5 0 0 0" BorderBrush="#ACDBE0" BorderThickness="1 2 2 2" Grid.Column="2">
+                        <StackPanel >
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="Визит 3" FontSize="21" FontWeight="Bold"/>
+                            </StackPanel>
+
+                            <StackPanel Margin="0 0 20 5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="Дата и время визита:" FontSize="18" HorizontalAlignment="Left" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Center" />
+                                    
+                                    <DatePicker Name="dateOf_visit3"  FontSize="18" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Right"
+                                                SelectedDateChanged="Date_field_Changed" MinWidth="140" MaxWidth="140"/>
+                                    
+                                    <materialDesign:TimePicker Name="timeOf_visit3"  FontSize="18" Grid.Column="1" Grid.Row="1" Is24Hours="True"
+                                                                MinWidth="140" MaxWidth="140" HorizontalAlignment="Right" SelectedTimeChanged="Time_field_Changed"/>
+
+                                </Grid>
+
+                            </StackPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Кол-во выданных таб.:" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                
+                                <TextBox x:Name="numOf_issuedPills_visit3" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                    FontSize="18" Background="#FBFBFB"  MaxLength="3" materialDesign:TextFieldAssist.CharacterCounterVisibility="Collapsed"
+                                    MinWidth="45" TextWrapping="NoWrap" Text="" TextChanged="Num_field_Changed"
+                                    TextAlignment="Center" Cursor="IBeam"/>
+                            </DockPanel>
+
+                            <StackPanel Margin="0 0 20 0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="Доза (мг):" FontSize="18" />
+                                    
+                                    <DockPanel Grid.Column="1" >
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <RadioButton x:Name="massDrug_8_visit3" GroupName="mass_Drug_visit3" Grid.Column="0" HorizontalAlignment="Center"
+                                                    Content="8" FontSize="16" Checked="RadioButMassDrugs_Changed" Cursor="Hand"/>
+                                            
+                                            <RadioButton x:Name="massDrug_16_visit3" GroupName="mass_Drug_visit3" Grid.Column="1" HorizontalAlignment="Center"
+                                                    Content="16" FontSize="16" Checked="RadioButMassDrugs_Changed" Cursor="Hand"/>
+                                            
+                                            <RadioButton x:Name="massDrug_32_visit3" GroupName="mass_Drug_visit3" Grid.Column="2" HorizontalAlignment="Center"
+                                                     Content="32" FontSize="16" Checked="RadioButMassDrugs_Changed" Cursor="Hand"/>
+                                        </Grid>
+                                    </DockPanel>
+                                </Grid>
+                            </StackPanel>
+
+
+                            <DockPanel Margin="0 3 20 3"  VerticalAlignment="Center">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="Номер серии:" FontSize="18" HorizontalAlignment="Left"/>
+
+                                    <ComboBox x:Name="serial_number_visit3" HorizontalContentAlignment="Right"
+                                              Grid.Column="1" FontSize="18" Background="#FBFBFB"/>
+                                </Grid>
+                            </DockPanel>
+
+                            <StackPanel Margin="0 0 20 0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="Срок годности:" FontSize="18" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
+                                    
+                                    <DatePicker Name="dateOf_shelfLife_visit3" FontSize="18" Grid.Row="0" Grid.Column="1"  VerticalAlignment="Center"
+                                                 MinWidth="140" MaxWidth="140" HorizontalAlignment="Right" SelectedDateChanged="Date_field_Changed"/>
+                                </Grid>
+                            </StackPanel>
+
+                            <StackPanel Margin="0 0 20 0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="32.94"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="Дата и время начала приема:" FontSize="18" HorizontalAlignment="Left" MinWidth="150" MaxWidth="150"
+                                               Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                    <DatePicker Name="dateOf_startTakingPills_visit3"  FontSize="18" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Right"
+                                                SelectedDateChanged="Date_field_Changed" MinWidth="140" MaxWidth="140"/>
+                                    <materialDesign:TimePicker Name="timeOf_startTakingPills_visit3"  FontSize="18" Grid.Column="1" Grid.Row="1" Is24Hours="True"
+                                                                MinWidth="140" MaxWidth="140" HorizontalAlignment="Right" SelectedTimeChanged="Time_field_Changed"/>
+
+                                </Grid>
+                            </StackPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Частота приема (в день):" FontSize="18" 
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <Border HorizontalAlignment="Right" CornerRadius="1" Background="#FBFBFB">
+                                    <TextBlock FontSize="18"  Text="1"
+                                                MinWidth="45" TextWrapping="NoWrap"
+                                                TextAlignment="Center"/>
+                                </Border>
+                            </DockPanel>
+                            
+                            <StackPanel Margin="0 0 20 5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="Последний прием :" FontSize="18" HorizontalAlignment="Left" Grid.Column="0" VerticalAlignment="Center"/>
+                                    <Border Grid.Column="1" BorderThickness="1 1 1 0">
+                                        <materialDesign:TimePicker Name="timeOf_endTakingPills_visit3"  FontSize="18" Grid.Column="1" Grid.Row="1" Is24Hours="True"
+                                                                MinWidth="140" MaxWidth="140" HorizontalAlignment="Right" SelectedTimeChanged="Time_field_Changed"/>
+
+
+                                    </Border>
+                                </Grid>
+                            </StackPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Кол-во принятых таблеток:" FontSize="16" HorizontalAlignment="Left"/>
+                                <Border HorizontalAlignment="Right" CornerRadius="1" Background="#FBFBFB">
+                                    <TextBlock x:Name="numOf_acceptedPills_visit3" 
+                                                FontSize="18"  Text="0"
+                                                MinWidth="45" TextWrapping="NoWrap"
+                                                TextAlignment="Center"/>
+                                </Border>
+                            </DockPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Кол-во пустых блистеров:" FontSize="16" HorizontalAlignment="Left"/>
+                                <Border HorizontalAlignment="Right" CornerRadius="1" Background="#FBFBFB">
+                                    <TextBlock x:Name="numOf_blankBlister_visit3" 
+                                                FontSize="18"  Text="0"
+                                                MinWidth="45" TextWrapping="NoWrap"
+                                                TextAlignment="Center"/>
+                                </Border>
+                            </DockPanel>
+
+                            <DockPanel Margin="0 3 20 3">
+                                <TextBlock Text="Кол-во оставшихся таблеток:" FontSize="16" HorizontalAlignment="Left"/>
+                                <Border HorizontalAlignment="Right" CornerRadius="1" Background="#FBFBFB">
+                                    <TextBlock x:Name="numOf_balancePills_visit3" 
+                                                FontSize="18"  Text="0"
+                                                MinWidth="45" TextWrapping="NoWrap"
+                                                TextAlignment="Center"/>
+                                </Border>
+                            </DockPanel>
+
+                            <StackPanel Margin="0 3 20 3">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="Дата и время визита:" FontSize="18" HorizontalAlignment="Left" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Center" />
+                                    
+                                    <DatePicker Name="dateOf_visit4"  FontSize="18" Grid.Column="1" Grid.Row="0"  HorizontalAlignment="Right"
+                                                SelectedDateChanged="Date_field_Changed" MinWidth="140" MaxWidth="140"/>
+                                    <materialDesign:TimePicker Name="timeOf_visit4"  FontSize="18" Grid.Column="1" Grid.Row="1" Is24Hours="True"
+                                                                MinWidth="140" MaxWidth="140" HorizontalAlignment="Right" SelectedTimeChanged="Time_field_Changed"/>
+
+                                </Grid>
+
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+
+                </Grid>
+                
+            </ScrollViewer>
+
+        </Border>
+    </Grid>
+   
+</Window>
