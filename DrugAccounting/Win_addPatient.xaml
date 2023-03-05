@@ -62,10 +62,10 @@
                         <DockPanel Margin="20 0" Grid.Column="2" Grid.Row="1">
                             <TextBlock Text="Препарат:" FontSize="21"/>
                             <RadioButton x:Name="Kasark" GroupName="Typeof_Drug" Content="Касарк" Cursor="Hand"
-                                         FontSize="20"  Margin="30 0 0 0" DockPanel.Dock="Left" Checked="ChoiseOf_Drug_Changed"/>
+                                         FontSize="20"  Margin="30 0 0 0" DockPanel.Dock="Left" Checked="ChoiceOf_Drug_Changed"/>
 
                             <RadioButton x:Name="Atakand" GroupName="Typeof_Drug" Content="Атаканд" Cursor="Hand"
-                                         HorizontalAlignment="Left" FontSize="20" Margin="30 0 0 0" Checked="ChoiseOf_Drug_Changed"/>
+                                         HorizontalAlignment="Left" FontSize="20" Margin="30 0 0 0" Checked="ChoiceOf_Drug_Changed"/>
                         </DockPanel>
                     </Grid>
                 </Border>

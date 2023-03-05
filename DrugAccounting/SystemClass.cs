@@ -1,4 +1,6 @@
-﻿namespace DrugAccounting
+﻿using DrugAccounting.Data;
+
+namespace DrugAccounting
 {
     public static class SystemClass
     {

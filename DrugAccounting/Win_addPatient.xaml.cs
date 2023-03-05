@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using DrugAccounting.Data;
 
 namespace DrugAccounting
 {
@@ -47,7 +48,6 @@ namespace DrugAccounting
         public WinAddPatient(Patient patient)
         {
             InitializeComponent();
-            MessageBox.Show(dateOf_visit1.ToString());
             Win_AddPatient.Opacity = 0.8;
             AnimationOpacity(1, 0.8);
             Title = "Новый пациент";
@@ -104,12 +104,12 @@ namespace DrugAccounting
             {
                 if (IsPatientNew)
                 {
-                    AddPatientToDB(); //Добавление пациента в БД
+                    AddPatientToDb(); //Добавление пациента в БД
                     IsPatientNew = false;
                 }
                 else
                 {
-                    AddPatientToDB(_idSelectedPatientAddWin); //Добавление пациента в БД
+                    AddPatientToDb(_idSelectedPatientAddWin); //Добавление пациента в БД
                 }
 
                 _isSaved = true;
@@ -141,7 +141,7 @@ namespace DrugAccounting
         }
 
         //Добавление пациента
-        public void AddPatientToDB()
+        private void AddPatientToDb()
         {
             if (!SystemClass.IsTableExists)
             {
@@ -152,7 +152,7 @@ namespace DrugAccounting
         }
 
         //Обновление пациента
-        public void AddPatientToDB(int idSelectedPatient)
+        private void AddPatientToDb(int idSelectedPatient)
         {
             SqlDataAccess.UpdatePatient(NewPatient, idSelectedPatient); //Обновление данных пациента
         }
@@ -162,24 +162,24 @@ namespace DrugAccounting
         {
             _isSaved = false;
             fullName_patient.Text = fullName_patient.Text.Trim(); //Невозможность ввода пробела в ФИО
-            var fullNameLenth = fullName_patient.Text.Length;
-            fullName_patient.CaretIndex = fullNameLenth; //Установка курсора на конец ФИО
+            var fullNameLength = fullName_patient.Text.Length;
+            fullName_patient.CaretIndex = fullNameLength; //Установка курсора на конец ФИО
 
-            if (fullNameLenth <= 0)
+            if (fullNameLength <= 0)
             {
                 return;
             }
 
-            if (char.IsLetter(fullName_patient.Text[fullNameLenth - 1])) //Проверка введенного символа на букву
+            if (char.IsLetter(fullName_patient.Text[fullNameLength - 1])) //Проверка введенного символа на букву
             {
                 fullName_patient.Text = fullName_patient.Text.ToUpper();
                 
-                if (fullNameLenth != 3)
+                if (fullNameLength != 3)
                 {
                     return;
                 }
 
-                fullName_patient.CaretIndex = fullNameLenth;
+                fullName_patient.CaretIndex = fullNameLength;
                 NewPatient.P_fullName_patient = fullName_patient.Text;
                 if (NewPatient.P_numOf_patient.ToString().Length == 3)
                 {
@@ -190,7 +190,7 @@ namespace DrugAccounting
             {
                 try
                 {
-                    fullName_patient.Text = fullName_patient.Text.Substring(0, fullNameLenth - 1);
+                    fullName_patient.Text = fullName_patient.Text.Substring(0, fullNameLength - 1);
                     fullName_patient.CaretIndex = fullName_patient.Text.Length;
                 }
                 catch { fullName_patient.Text = ""; }
@@ -267,7 +267,7 @@ namespace DrugAccounting
         }
 
         //Выбор препарата
-        private void ChoiseOf_Drug_Changed(object sender, RoutedEventArgs e)
+        private void ChoiceOf_Drug_Changed(object sender, RoutedEventArgs e)
         {
             _isSaved = false;
             NewPatient.P_typeOf_drug = Kasark.IsChecked == true ? "Kasark" : "Atakand";

@@ -13,6 +13,9 @@
     <None Remove="Exit_img_light.png" />
     <None Remove="Expand_img.png" />
     <None Remove="Rollup_img.png" />
+    <None Update="Data\Patients.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -33,16 +36,6 @@
     <Resource Include="Exit_img_light.png" />
     <Resource Include="Expand_img.png" />
     <Resource Include="Rollup_img.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Patients.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data" />
   </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Linq;
 using Dapper;
 
-namespace DrugAccounting
+namespace DrugAccounting.Data
 {
     static class SqlDataAccess
     {
@@ -178,7 +178,7 @@ namespace DrugAccounting
             CreateTableIfNotExist();
         }
         //Путь к базе данных
-        public static string LoadConnectingString(string id = "Default")
+        private static string LoadConnectingString(string id = "Default")
         {
             return ConfigurationManager.ConnectionStrings[id].ConnectionString;
         }

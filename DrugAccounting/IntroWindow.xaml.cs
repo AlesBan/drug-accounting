@@ -6,8 +6,8 @@ namespace DrugAccounting
 {
     public partial class IntroWindow
     {
-        readonly DispatcherTimer _timerForAnimationOpacity = new DispatcherTimer(); //Таймер для начала анимации затухания
-        readonly DispatcherTimer _timerForOpenWin = new DispatcherTimer(); //Таймер для открытия окна
+        readonly DispatcherTimer _timerForAnimationOpacity = new DispatcherTimer(); 
+        readonly DispatcherTimer _timerForOpenWin = new DispatcherTimer(); 
         readonly MainWindow _mainWindow = new MainWindow();
 
         public IntroWindow()

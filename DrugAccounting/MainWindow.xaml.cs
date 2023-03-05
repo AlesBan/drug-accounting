@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using DrugAccounting.Data;
 
 namespace DrugAccounting
 {
@@ -43,18 +44,20 @@ namespace DrugAccounting
         }
 
         //Очистка БД
-        public void DeleteTable()
+        private static void DeleteTable()
         {
             if (MessageBox.Show("Вы уверены, что хотете очистить базу данных?", "Подтверждение",
-                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    MessageBoxButton.YesNo) != MessageBoxResult.Yes)
             {
-                SqlDataAccess.DeleteTable();
-                MessageBox.Show("База данных очищена");
+                return;
             }
+
+            SqlDataAccess.DeleteTable();
+            MessageBox.Show("База данных очищена");
         }
 
         //Обновляем таблицу пациентов, пациентами, которых достали из БД
-        public void LoadPatientsList_ToDataGrid()
+        private void LoadPatientsList_ToDataGrid()
         {
             _patientsList = SqlDataAccess.LoadPatients(); // Инициализация листа, пациентами, кторых достали из БД
             DG_AllPatients.ItemsSource =
@@ -70,9 +73,9 @@ namespace DrugAccounting
         //Добавление нового пациента
         private void AddPatient()
         {
-            WinAddPatient win_AddPatient = new WinAddPatient(new Patient());
-            win_AddPatient.Show();
-            if (win_AddPatient.IsActive)
+            WinAddPatient winAddPatient = new WinAddPatient(new Patient());
+            winAddPatient.Show();
+            if (winAddPatient.IsActive)
             {
                 SetTimer_ForClose();
             }
