@@ -544,7 +544,7 @@ namespace DrugAccounting
         }
 
         //Наведение курсором на системные кнопок
-        private void SistemBut_Enter(object sender, MouseEventArgs e)
+        private void SystemBut_Enter(object sender, MouseEventArgs e)
         {
             Grid grid = (Grid)sender;
             Border border = (Border)VisualTreeHelper.GetChild(grid, 0);
@@ -552,7 +552,7 @@ namespace DrugAccounting
         }
 
         //Покидание курсора системных кнопок
-        private void SistemBut_Leave(object sender, MouseEventArgs e)
+        private void SystemBut_Leave(object sender, MouseEventArgs e)
         {
             Grid grid = (Grid)sender;
             Border border = (Border)VisualTreeHelper.GetChild(grid, 0);
@@ -560,7 +560,7 @@ namespace DrugAccounting
         }
 
         //Нажатие на системные кнопки
-        private void SistemBut_MouseDown(object sender, MouseEventArgs e)
+        private void SystemBut_MouseDown(object sender, MouseEventArgs e)
         {
             Grid grid = (Grid)sender;
             Border border = (Border)VisualTreeHelper.GetChild(grid, 0);
@@ -568,7 +568,7 @@ namespace DrugAccounting
         }
 
         //Отпускаеи курсор мыши над системными кнопками
-        private void SistemBut_MouseUp(object sender, MouseButtonEventArgs e)
+        private void SystemBut_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Grid grid = (Grid)sender;
             switch (grid.Name)
