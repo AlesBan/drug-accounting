@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using Dapper;
 
@@ -15,9 +16,10 @@ namespace DrugAccounting
         public static List<Patient> LoadPatients()
         {
             using IDbConnection cnn = new SQLiteConnection(LoadConnectingString());
-            var output = cnn.Query<Patient>("SELECT " +
-                 $"id, P_numOf_patient, P_fullName_patient, P_numOf_center, P_typeOf_drug " +
-                 $"FROM Table_Patient", new DynamicParameters());
+            var output = cnn.Query<Patient>(
+                $"SELECT id, P_numOf_patient, " +
+                $"P_fullName_patient, P_numOf_center, " +
+                $"P_typeOf_drug FROM Table_Patient", new DynamicParameters());
             return output.ToList();
         }
         //Сохранение нового пациента
@@ -25,7 +27,7 @@ namespace DrugAccounting
         {
             using IDbConnection cnn = new SQLiteConnection(LoadConnectingString());
             Console.WriteLine();
-            Trace.WriteLine("SAVE: \n" + patient.P_dateOf_visit1.ToString() + " \n" + patient.P_dateOf_shelfLife_visit1.ToString());
+            Trace.WriteLine("SAVE: \n" + patient.P_dateOf_visit1.ToString(CultureInfo.InvariantCulture) + " \n" + patient.P_dateOf_shelfLife_visit1.ToString(CultureInfo.InvariantCulture));
             string command = $"INSERT INTO Table_Patient (" +
                 $"P_numOf_patient, P_fullName_patient, P_numOf_center, P_typeOf_drug, " +
                 $"P_dateOf_visit1_STR, P_dateOf_visit2_STR, P_dateOf_visit3_STR, P_dateOf_visit4_STR, " +
@@ -62,8 +64,8 @@ namespace DrugAccounting
         public static void UpdatePatient(Patient patient, int id_selectedPatient)
         {
             using IDbConnection cnn = new SQLiteConnection(LoadConnectingString());
-            Console.WriteLine("UPDATE: \n" + patient.P_dateOf_visit1.ToString() + " \n" + patient.P_dateOf_shelfLife_visit1.ToString());
-            Trace.WriteLine("UPDATE: \n" + patient.P_dateOf_visit1.ToString() + " \n" + patient.P_dateOf_shelfLife_visit1.ToString());
+            Console.WriteLine("UPDATE: \n" + patient.P_dateOf_visit1.ToString(CultureInfo.InvariantCulture) + " \n" + patient.P_dateOf_shelfLife_visit1.ToString(CultureInfo.InvariantCulture));
+            Trace.WriteLine("UPDATE: \n" + patient.P_dateOf_visit1.ToString(CultureInfo.InvariantCulture) + " \n" + patient.P_dateOf_shelfLife_visit1.ToString(CultureInfo.InvariantCulture));
 
             string command = $"UPDATE Table_Patient " +
                 $"SET " +
